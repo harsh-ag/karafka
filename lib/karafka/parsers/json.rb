@@ -10,6 +10,9 @@ module Karafka
       # @example
       #   Json.parse("{\"a\":1}") #=> { 'a' => 1 }
       def self.parse(content)
+        # Handle the case when content is nil
+        content = "{}" if content.nil?
+
         ::MultiJson.load(content)
       rescue ::MultiJson::ParseError => e
         raise ::Karafka::Errors::ParserError, e
